@@ -7,7 +7,7 @@ let todos = [
 ];
 
 export function getTodos() {
-	return getTodos;
+	return todos;
 }
 
 export function addTodo(text) {
