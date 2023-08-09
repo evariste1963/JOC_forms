@@ -28,6 +28,7 @@
 </ul>
 
 <form on:submit|preventDefault={addTodo} method="POST">
-	<input type="text" name="todo" />
+	<!--<label for="adding a todo">add a todo</label> -->
+	<input type="text" name="todo" placeholder="create a todo" style="font-style:italic" />
 	<button type="submit">➕ Add Todo</button>
 </form>
