@@ -3,7 +3,7 @@
 	export let data;
 
 	async function addTodo(event) {
-		console.log(event);
+		console.log(event.target.todo.value);
 	}
 
 	async function removeTodo(event) {}
