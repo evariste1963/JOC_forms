@@ -6,6 +6,7 @@
 
 	:global(body) {
 		padding: 2rem;
+		font-family: cursive, sans-serif;
 	}
 
 	:global(input, button) {
