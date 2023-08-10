@@ -3,7 +3,8 @@
 	export let data;
 
 	async function addTodo(event) {
-		console.log(event.target.todo.value);
+		console.log(event.target.todo.value, event.target.action);
+		//event.target.reset();
 	}
 
 	async function removeTodo(event) {}
@@ -55,7 +56,6 @@
 	}
 
 	input {
-		font-family: cursive, sans-serif;
 		font-style: italic;
 	}
 </style>
