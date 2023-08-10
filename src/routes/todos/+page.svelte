@@ -13,9 +13,9 @@
     {JSON.stringify(data, null, 2)}
 </pre>
 
-<ul>
+<ul style="padding: 0">
 	{#each data.todos as todo}
-		<li>
+		<li style="list-style-type: none">
 			<span>{todo.text}</span>
 			<form on:submit|preventDefault={removeTodo} method="POST">
 				<!-- USE FORMS INSTEAD OF BUTTONS!!-- HOWEVER SMALL THE FORM MAYBE!!-->
@@ -29,6 +29,11 @@
 
 <form on:submit|preventDefault={addTodo} method="POST">
 	<!--<label for="adding a todo">add a todo</label> -->
-	<input type="text" name="todo" placeholder="create a todo" style="font-style:italic" />
+	<input
+		type="text"
+		name="todo"
+		placeholder="create a todo"
+		style="font-family:cursive, sans-serif ; font-style:italic"
+	/>
 	<button type="submit">➕ Add Todo</button>
 </form>
