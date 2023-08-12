@@ -1,10 +1,24 @@
 <script>
 	/** @type {import('./$types').PageData} */
-	export let data;
+	import { invalidateAll } from '$app/navigation';
+	export let data, form;
 
 	async function addTodo(event) {
-		console.log(event.target.todo.value, event.target.action);
-		//event.target.reset();
+		const formEl = event.target;
+		const data = new FormData(formEl);
+
+		//ping the endpoint
+		const response = await fetch(formEl.action, {
+			method: 'POST',
+			body: data
+		});
+
+		const responseData = await response.json();
+		//set the form variable
+
+		form = responseData;
+		formEl.reset();
+		await invalidateAll();
 	}
 
 	async function removeTodo(event) {}
@@ -21,7 +35,7 @@
 			<form on:submit|preventDefault={removeTodo} method="POST">
 				<!-- USE FORMS INSTEAD OF BUTTONS!!-- HOWEVER SMALL THE FORM MAYBE!!-->
 				<input type="hidden" name="id" value={todo.id} />
-				<!--HIDDEN INPUT TO SEND TO THE SERVER -->
+				<!--HIDDEN INPUT TO SEND ID TO THE SERVER -->
 				<button class="delete" type="submit">❌</button>
 			</form>
 		</li>
@@ -33,6 +47,8 @@
 	<input type="text" name="todo" placeholder="create a todo" />
 	<button type="submit">➕ Add Todo</button>
 </form>
+
+<!-- NO ACTION FIELD IN THE FORMS BECAUSE WE ARE SUBMITTING TO THE SAME PAGE -->
 
 <style>
 	ul {
@@ -53,6 +69,10 @@
 		margin: 0;
 		background: none;
 		border: none;
+	}
+
+	.error {
+		color: tomato;
 	}
 
 	input {
