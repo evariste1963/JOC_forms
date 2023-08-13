@@ -2,7 +2,7 @@
 
 import { json } from '@sveltejs/kit';
 import { addTodo } from '$lib/server/database';
-import { removeTodo } from '../../lib/server/database';
+import { removeTodo } from '$lib/server/database';
 
 export const POST = async ({ request }) => {
 	//reuqest is used so we can get theform data
@@ -30,9 +30,7 @@ export const POST = async ({ request }) => {
 
 export const DELETE = async ({ request }) => {
 	const formData = await request.formData();
-	const todoId = formData.get('id'); // todo is the name on the form data that we want to
-
+	const todoId = Number(formData.get('id')); // todo is the name on the form data that we want to get
 	removeTodo(todoId); //from the server/database
-
 	return json({ success: true });
 };
