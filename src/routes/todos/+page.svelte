@@ -90,7 +90,7 @@
 	}
 
 	.error {
-		color: rgb(197, 139, 129);
+		color: tomato;
 	}
 
 	input {
