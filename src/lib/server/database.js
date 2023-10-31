@@ -3,6 +3,11 @@ let todos = [
 		id: Date.now(),
 		text: 'learn how forms work',
 		completed: false
+	},
+	{
+		id: Date.now() + 1,
+		text: 'my 1st todo',
+		completed: false
 	}
 ];
 
@@ -23,6 +28,6 @@ export function removeTodo(id) {
 	todos = todos.filter((todo) => todo.id !== id);
 }
 
-export function clearTodo() {
+export function clearTodos() {
 	todos = [];
 }

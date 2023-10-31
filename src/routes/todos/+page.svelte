@@ -1,48 +1,19 @@
 <script>
 	/** @type {import('./$types').PageData} */
-	import { invalidateAll } from '$app/navigation';
+	import { enhance } from '$app/forms';
 	export let data;
-	let form;
-
-	async function addTodo(event) {
-		const formEl = event.target;
-		const data = new FormData(formEl);
-		//ping the endpoint
-		const response = await fetch(formEl.action, {
-			method: 'POST',
-			body: data
-		});
-
-		const responseData = await response.json();
-		//set the form variable
-		form = responseData;
-		formEl.reset();
-		await invalidateAll();
-	}
-
-	async function removeTodo(event) {
-		const formEl = event.target;
-
-		const data = new FormData(formEl);
-
-		const response = await fetch(formEl.action, {
-			method: 'DELETE',
-			body: data
-		});
-
-		await invalidateAll();
-	}
+	export let form;
 </script>
 
 <pre>
-    {JSON.stringify(data, null, 2)}
+    {JSON.stringify(form, null, 2)}
 </pre>
 
 <ul>
 	{#each data.todos as todo}
 		<li>
 			<span>{todo.text}</span>
-			<form on:submit|preventDefault={removeTodo} method="POST">
+			<form method="POST" action="?/removeTodo" use:enhance>
 				<!-- USE FORMS INSTEAD OF BUTTONS!!-- HOWEVER SMALL THE FORM MAYBE!!-->
 				<input type="hidden" name="id" value={todo.id} />
 				<!--HIDDEN INPUT TO SEND ID TO THE SERVER -->
@@ -52,19 +23,20 @@
 	{/each}
 </ul>
 
-<form on:submit|preventDefault={addTodo} method="POST">
+<form method="POST" action="?/addTodo" use:enhance>
 	<!--<label for="adding a todo">add a todo</label> -->
 	<input type="text" name="todo" placeholder="create a todo" />
-	{#if form?.errors?.todo}
+	{#if form?.missing}
 		<!-- the ? is/are for if they don't exist -->
 		<p class="error">This field is required</p>
 	{/if}
 	<button type="submit">➕ Add Todo</button>
-
-	{#if form?.success}
-		<p>Added todo! 👍</p>
-	{/if}
+	<button formaction="?/clearTodos" class="secondary" type="submit">Clear</button>
 </form>
+
+{#if form?.success}
+	<p>Added todo! 👍</p>
+{/if}
 
 <!-- NO ACTION FIELD IN THE FORMS BECAUSE WE ARE SUBMITTING TO THE SAME PAGE -->
 
