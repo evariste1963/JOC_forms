@@ -3,6 +3,18 @@
 	import { enhance } from '$app/forms';
 	export let data;
 	export let form;
+
+	let loading = false;
+
+	const addTodo = () => {
+		//do something before the form submits i.e. validation etc
+		loading = true;
+		return async ({ update }) => {
+			//do something after the form submits
+			loading = false;
+			await update();
+		};
+	};
 </script>
 
 <pre>
@@ -23,14 +35,18 @@
 	{/each}
 </ul>
 
-<form method="POST" action="?/addTodo" use:enhance>
+<form method="POST" action="?/addTodo" use:enhance={addTodo}>
 	<!--<label for="adding a todo">add a todo</label> -->
 	<input type="text" name="todo" placeholder="create a todo" />
 	{#if form?.missing}
 		<!-- the ? is/are for if they don't exist -->
 		<p class="error">This field is required</p>
 	{/if}
-	<button type="submit">➕ Add Todo</button>
+	<button aria-busy={loading} class:secondary={loading} type="submit">
+		{#if !loading}
+			➕ Add Todo
+		{/if}
+	</button>
 	<button formaction="?/clearTodos" class="secondary" type="submit">Clear</button>
 </form>
 

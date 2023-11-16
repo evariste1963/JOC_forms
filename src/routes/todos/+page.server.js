@@ -7,6 +7,10 @@ export async function load() {
 	return { todos };
 }
 
+async function sleep(ms) {
+	return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export const actions = {
 	//default: () => {}
 	addTodo: async ({ request }) => {
@@ -16,6 +20,7 @@ export const actions = {
 		if (!todo) {
 			return fail(400, { todo, missing: true });
 		}
+		await sleep(2000);
 
 		addTodo(todo);
 		return { success: true };
